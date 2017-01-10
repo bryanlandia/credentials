@@ -127,7 +127,7 @@ class RenderCredentialPageTests(SiteMixin, TestCase):
         # test programs data
         self.assertContains(
             response,
-            'a series of 2 courses offered by {org_name} through {platform_name}'.format(
+            'a program offered by {org_name}, in collaboration with {platform_name}'.format(
                 org_name=self.PRIMARY_ORGANIZATION_KEY,
                 platform_name=settings.PLATFORM_NAME
             )
@@ -137,7 +137,7 @@ class RenderCredentialPageTests(SiteMixin, TestCase):
         # test html strings are appearing on page.
         self.assertContains(
             response,
-            'XSeries Certificate | {platform_name}'.format(platform_name=self.site.name)
+            'XSeries | {platform_name}'.format(platform_name=self.site.name)
         )
         self._assert_html_data(response)
 
@@ -150,7 +150,7 @@ class RenderCredentialPageTests(SiteMixin, TestCase):
         self.assertContains(response, 'offers interactive online classes and MOOCs from the')
         self.assertContains(
             response,
-            'An {platform_name} XSeries Certificate signifies that the learner has'.format(
+            'An {platform_name} XSeries Program certificate signifies that the learner has'.format(
                 platform_name=settings.PLATFORM_NAME
             )
         )
