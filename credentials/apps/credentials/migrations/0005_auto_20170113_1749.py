@@ -14,6 +14,11 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterField(
             model_name='usercredential',
+            name='download_url',
+            field=models.CharField(help_text='URL at which the credential can be downloaded', max_length=255, null=True, blank=True),
+        ),
+        migrations.AlterField(
+            model_name='usercredential',
             name='uuid',
             field=models.UUIDField(default=uuid.uuid4, unique=True, editable=False),
         ),

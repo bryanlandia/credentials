@@ -6,12 +6,12 @@ from __future__ import unicode_literals
 import uuid
 
 import ddt
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from mock import patch
 import responses
 
+from credentials.apps.core.models import SiteConfiguration
 from credentials.apps.core.tests.mixins import SiteMixin
 from credentials.apps.credentials.models import UserCredential
 from credentials.apps.credentials.tests import factories
@@ -32,6 +32,7 @@ class RenderCredentialPageTests(SiteMixin, TestCase):
         self.signatory_2 = factories.SignatoryFactory()
         self.program_certificate.signatories.add(self.signatory_1, self.signatory_2)
         self.user_credential = factories.UserCredentialFactory(credential=self.program_certificate)
+        self.platform_name = SiteConfiguration.objects.first().platform_name
 
     def _render_user_credential(self):
         """ Helper method to render a user certificate."""
@@ -129,7 +130,7 @@ class RenderCredentialPageTests(SiteMixin, TestCase):
             response,
             'a program offered by {org_name}, in collaboration with {platform_name}'.format(
                 org_name=self.PRIMARY_ORGANIZATION_KEY,
-                platform_name=settings.PLATFORM_NAME
+                platform_name=self.platform_name
             )
         )
         self.assertContains(response, certificate_title)
@@ -151,7 +152,7 @@ class RenderCredentialPageTests(SiteMixin, TestCase):
         self.assertContains(
             response,
             'An {platform_name} XSeries Program certificate signifies that the learner has'.format(
-                platform_name=settings.PLATFORM_NAME
+                platform_name=self.platform_name
             )
         )
         self.assertContains(response, 'All rights reserved except where noted. edX')
@@ -178,7 +179,7 @@ class RenderCredentialPageTests(SiteMixin, TestCase):
 @ddt.ddt
 class ExampleCredentialTests(TestCase):
     def test_get(self):
-        """ Verify the view loads. """
+        """ Verify the view works with no program_type parameter. """
         response = self.client.get(reverse('credentials:example'))
         self.assertEqual(response.status_code, 200)
 
