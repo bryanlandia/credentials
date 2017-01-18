@@ -49,6 +49,35 @@ def get_user_data(username):
     Returns:
         dict, representing user data returned by the User API.
     """
+    return {
+        "username": "clintonb",
+        "bio": None,
+        "requires_parental_consent": False,
+        "name": "Clinton Blackburn",
+        "country": "US",
+        "is_active": True,
+        "profile_image": {
+            "image_url_full": "https://d1kekzok76m982.cloudfront.net/stage/8f5d3a898012008f48d321b042e53b3d_500.jpg?v=1460425196",
+            "image_url_large": "https://d1kekzok76m982.cloudfront.net/stage/8f5d3a898012008f48d321b042e53b3d_120.jpg?v=1460425196",
+            "image_url_medium": "https://d1kekzok76m982.cloudfront.net/stage/8f5d3a898012008f48d321b042e53b3d_50.jpg?v=1460425196",
+            "image_url_small": "https://d1kekzok76m982.cloudfront.net/stage/8f5d3a898012008f48d321b042e53b3d_30.jpg?v=1460425196",
+            "has_image": True
+        },
+        "year_of_birth": 1986,
+        "level_of_education": None,
+        "accomplishments_shared": False,
+        "goals": "",
+        "language_proficiencies": [
+            {
+                "code": "en"
+            }
+        ],
+        "gender": None,
+        "account_privacy": "all_users",
+        "mailing_address": "1234 Anylane\r\nTempe, AZ 85234\r\n",
+        "email": "cblackburn@edx.org",
+        "date_joined": "2014-06-09T15:24:23Z"
+    }
     cache_key = 'user.api.data.{hash}'.format(hash=_make_hash(username))
     user = cache.get(cache_key)
 

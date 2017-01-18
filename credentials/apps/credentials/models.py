@@ -269,18 +269,7 @@ class ProgramCertificate(AbstractCertificate):
 
     def get_program_api_data(self):
         """ Returns program data from the Catalog API. """
-        program_uuid = self.program_uuid.hex
-        cache_key = 'programs.api.data.{uuid}'.format(uuid=program_uuid)
-        program = cache.get(cache_key)
-
-        if program:
-            return program
-
-        client = self.site.siteconfiguration.catalog_api_client  # pylint:disable=no-member
-        program = client.programs(program_uuid).get()
-        cache.set(cache_key, program, settings.PROGRAMS_CACHE_TTL)
-
-        return program
+        return self.site.siteconfiguration.get_program(self.program_uuid)
 
     @cached_property
     def program_details(self):
